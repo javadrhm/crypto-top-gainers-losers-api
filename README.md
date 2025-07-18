@@ -1,8 +1,4 @@
-Sure! Here’s the full updated README with that clearer phrasing:
-
----
-
- 📊 Crypto Top Gainers & Losers API
+📊 Crypto Top Gainers & Losers API
 
 A simple project to **fetch, store, and serve** Top Crypto Gainers & Losers from CoinGecko’s market data.
 Built with **FastAPI** and **SQLite** for personal use, dashboards, or learning purposes.
@@ -12,12 +8,17 @@ Built with **FastAPI** and **SQLite** for personal use, dashboards, or learning 
  ⚡ Features
 
 * Fetches **all market coins** from CoinGecko every 12 hours
-* Stores historical market data in SQLite
+* Stores historical market data snapshots in SQLite
 * Provides a simple **REST API** to get:
 
-  * ✅ Top gainers or losers in **Top 500 coins**
-  * ✅ Top gainers or losers in **entire market**
-  * ✅ Filter results by timeframe: `24h`, `7d`, `30d`, `1y`
+  * ✅ Top gainers or losers in a configurable number of **Top N coins by market cap** (default 500)
+  * ✅ Top gainers or losers in the **entire market**
+  * ✅ Filter results by timeframe:
+
+    * `24h` (24 hours)
+    * `7d` (7 days)
+    * `30d` (30 days)
+    * `1y` (1 year)
 
 ---
 
@@ -25,9 +26,9 @@ Built with **FastAPI** and **SQLite** for personal use, dashboards, or learning 
 
 ```
 .
-├── getdata.py           Data fetcher — fetches & stores market data snapshots
-├── api.py               FastAPI server — serves gainers/losers endpoints
-├── coins_snapshots.db   SQLite database (auto-generated)
+├── getdata.py            Data fetcher — fetches & stores market data snapshots
+├── api.py                FastAPI server — serves gainers/losers endpoints
+├── coins_snapshots.db    SQLite database (auto-generated)
 ├── requirements.txt
 ├── README.md
 ```
@@ -63,11 +64,24 @@ uvicorn api:app --reload --port 8000
 
  📝 Example API Calls
 
-* ✅ **Top 500 Gainers**
-  `GET /top500/gainers?timeframe=24h&limit=10`
+ Top N coins by market cap gainers/losers:
 
-* ✅ **Global Losers (Entire Market)**
-  `GET /global/losers?timeframe=7d&limit=5`
+```http
+GET /topcoins/gainers?top=500&limit=10&timeframe=7d
+```
+
+* `top` = how many top coins by market cap to consider (max 1000, default 500)
+* `limit` = how many results to return (default 10)
+* `timeframe` = one of `24h`, `7d`, `30d`, `1y`
+
+ Global (entire market) gainers/losers:
+
+```http
+GET /global/losers?limit=20&timeframe=30d
+```
+
+* `limit` = how many results to return (default 10)
+* `timeframe` = one of `24h`, `7d`, `30d`, `1y`
 
 ---
 
@@ -82,10 +96,10 @@ crontab -e
 Add this line to fetch every **12 hours**:
 
 ```bash
-0 */12 * * * /usr/bin/python3 /path/to/getdata.py >> /path/to/cron.log 2>&1
+0 */12 * * * /usr/bin/python3 /full/path/to/getdata.py >> /full/path/to/cron.log 2>&1
 ```
 
-> Replace `/path/to/` with your actual full path.
+> Replace `/full/path/to/` with your actual full paths.
 
 ---
 
@@ -99,7 +113,7 @@ It is intended for **personal, educational, or internal use only**.
 
 I am **not affiliated with CoinGecko**. Use at your own responsibility.
 
+---
 
-
- ⭐ If you find this useful, please star the repo!
+⭐ If you find this useful, please star the repo!
 
