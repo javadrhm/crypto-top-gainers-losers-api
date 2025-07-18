@@ -1,4 +1,4 @@
-📊 Crypto Top Gainers & Losers API
+<h2> 📊 Crypto Top Gainers & Losers API </h2>
 
 A simple project to **fetch, store, and serve** Top Crypto Gainers & Losers from CoinGecko’s market data.
 Built with **FastAPI** and **SQLite** for personal use, dashboards, or learning purposes.
